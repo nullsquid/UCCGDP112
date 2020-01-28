@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Getting to Know Lua</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Getting to Know Lua & LoVE2D</h1>
+					<h2>It's pretty friendly :)</h2>
+				</section>
+				<section>
+					<h1>Part 1: How Lua Works</h1>
+				</section>
+				<section>
+					<h2>Variables</h2>
+					<p>Defining a variable in Lua looks like this:</p>
+					<pre><code class="hljs" data-trim data-line-numbers="4,8-11">
+							name = "Hyacinth"
+							health = 100
+							is_alive = true
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Functions</h2>
+					<p>You can define functions like so:</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							function add(a,b)
+							 return a + b
+							end
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>And call them</h2>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							add(5,10)
+						</code>
+					</pre>
+					<p>The above function will return 15 when the program is run</p>
+				</section>
+				<section>
+					<h2>Arrays</h2>
+					<p>To define an empty array, we simply write</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							a = {}
+						</code>
+					</pre>
+					<p>Lua arrays can start at any index, but it's customary to start them at 1 (and most Lua libraries do as well)</p>
+				</section>
+				<section>
+					<h2>Loops</h2>
+					<p>For loops look like</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							for i = 1, 10 do
+							 a[i] = 0
+							end
+						</code>
+					</pre>
+					<p>This tells the program to set <code>i</code> to 0, and add 1 to <code>i</code> until it's 10</p>
+					<p>The <code>i</code>th element of Array <code>a</code> is then filled with a 0</p>
+				</section>
+				<section>
+					<h2>Tables</h2>
+					<p>Tables are super important in Lua, and to making games using the language</p>
+					<p>For instance, we can write:</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							player = {}
+							player.health = 100
+							player.speed = 10
+							player.is_dead = false
+						</code>
+					</pre>
+				</section>
+				<section>
+					<p>and then can access those properties using dot notation</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							if player.health <= 0 then
+							 player.is_dead = true
+							end
+						</code>
+					</pre>
+					<p>Tables are great for bundling like-functioning data together</p>
+				</section>
+				<section>
+					<h2>So how do we turn any of this into a game?</h2>
+				</section>
+				<section>
+					<h2>That's where LoVE comes in</h2>
+				</section>
+				<section>
+					<h2>Some important concepts for game scripting</h2>
+				</section>
+				<section>
+					<h2>Game Framework</h2>
+					<p class="fragment">LoVE is a Game Framework, which means that it has a bunch of helper functions and code that allow us to write games far easier than if we didn't have it</p>
+				</section>
+				<section>
+					<h2>Update Loops</h2>
+					<p class="fragment">Most modern game engines have a built in Update loop</p>
+					<p class="fragment">This is a loop that runs every frame and that all of your core logic will go inside of</p>
+				</section>
+				<section>
+					<h2>Draw Loops</h2>
+					<p class="fragment">Additionally, LoVE has a Draw loop, which does all of the graphics processing for the game</p>
+					<p class="fragment">Only code that draws stuff should be put in this function</p>
+				</section>
+				<section>
+					<h2>Coordinate Systems</h2>
+					<img class="fragment" src="img/lovecoordsystem.png" alt="LoVE Coordinate System">
+				</section>
+				<section>
+					<h2>Delta Time</h2>
+					<p class="fragment">Computers are REALLY fast these days (our update loop runs about 60 times a second), so we need a way to ensure framerate independence for our games</p>
+					<p class="fragment">Delta time is the time (in miliseconds) since the last frame--which allows us to make sure that our game runs at the same speed for everyone</p>
+				</section>
+				<section>
+					<h2>Our First LoVE "Game"</h2>
+				</section>
+				<section>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							function love.load()
+
+							end
+
+							function love.draw()
+							 love.graphics.rectangle("fill", 50, 50, 60 120)
+							end
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Now let's make it move</h2>
+					<h3>(the last slide will have the answer but give it an honest try)</h3>
+					<!-- <pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							local x
+							function love.load()
+							  x = 5
+							end
+
+							function love.draw()
+							  love.graphics.rectangle("fill", x, 50, 60, 120)
+							end
+
+							function love.update(dt)
+							  if x < 300 then
+							    x = x + 50 * dt
+							  else
+							    x = 50
+							  end
+							end
+
+						</code>
+					</pre>
+				</section> -->
+				</section>
+				<section>
+					<h2>Homework</h2>
+					<p>If you have access to a computer, install the following software:</p>
+					<ul>
+						<li>LoVE (<a href="http://www.love2d.org">love2d.org</a>)</li>
+						<li>Atom text editor (<a href="http://www.atom.io">atom.io</a>)</li>
+						<li>The love-ide package for atom (search atom's package manager)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Your homework's answer is next--</h2>
+				</section>
+				<section>
+					<p>To just make it move, we can do</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							local x
+							function love.load()
+							  x = 5
+							end
+
+							function love.draw()
+							  love.graphics.rectangle("fill", x, 50, 60, 120)
+							end
+
+							function love.update(dt)
+							  x = x + 50 * dt
+							end
+
+						</code>
+					</pre>
+					<p>turn the slide</p>
+				</section>
+				<section>
+					<p>But to make it a bit fancier and have it loop back to it's starting position, we can write</p>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="4,8-11">
+							local x
+							function love.load()
+							  x = 5
+							end
+
+							function love.draw()
+							  love.graphics.rectangle("fill", x, 50, 60, 120)
+							end
+
+							function love.update(dt)
+							  if x < 300 then
+							    x = x + 50 * dt
+							  else
+							    x = 50
+							  end
+							end
+
+						</code>
+					</pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
